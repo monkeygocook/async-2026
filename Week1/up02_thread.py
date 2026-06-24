@@ -23,7 +23,7 @@ def main():
     main_pid = os.getpid()
     main_tid = threading.current_thread().native_id
     
-    print(f"{ctime()} | [Main PID: {main_pid}] [Main TID: {main_tid}] === เริ่มระบบจำลองตู้กาแฟแบบ Multi-Thread ===")
+    print(f"{ctime()} | === Multi-thread Coffee Machine ===")
     start_time = time()
     
     threads = []
