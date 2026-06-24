@@ -1,5 +1,6 @@
 import asyncio
 from time import sleep, ctime, time
+
 async def update_cup_number(customer_name):
     print(f"{ctime()} | LCD: Processing for customer {customer_name}...")
     await asyncio.sleep(1) # บล็อกการทำงานของ Thread นี้ไว้ 5 วินาทีเต็มๆ

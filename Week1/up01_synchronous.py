@@ -1,6 +1,4 @@
 from time import sleep, ctime, time
-import os
-import threading
 
 def update_cup_number(customer_name):
     print(f"{ctime()} | LCD: Processing for customer {customer_name}...")
@@ -8,9 +6,6 @@ def update_cup_number(customer_name):
     print(f"{ctime()} | LCD: Done for customer {customer_name}!")
 
 def make_coffee(customer_name):
-    pid = os.getpid()
-    thread_id = threading.current_thread().native_id
-    thread_name = threading.current_thread().name
 
     print(f"{ctime()} | Making coffee for {customer_name}...")
     sleep(1) # บล็อกการทำงานของ Thread นี้ไว้ 5 วินาทีเต็มๆ
@@ -18,8 +13,6 @@ def make_coffee(customer_name):
 
 def main():
     queue = ['A', 'B', 'C']
-    main_pid = os.getpid()
-    main_tid = threading.current_thread().native_id
     
     print(f"{ctime()} | === Synchronous Coffee Machine ===")
     start_time = time()
