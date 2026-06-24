@@ -16,7 +16,7 @@ def make_coffee(customer_name):
 def main():
     queue = ['A', 'B', 'C']
     
-    print(f"{ctime()} | === Multi-thread Coffee Machine === ")
+    print(f"{ctime()} | === Multi-threading Coffee Machine === ")
     start_time = time()
     
     threads = []

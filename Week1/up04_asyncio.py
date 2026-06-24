@@ -16,7 +16,7 @@ async def main():
     queue = ['A', 'B', 'C']
 
     
-    print(f"{ctime()} | === asyncio Coffee Machine === ")
+    print(f"{ctime()} | === Asyncio Coffee Machine === ")
     start_time = time()
     
     tasks = []

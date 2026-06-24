@@ -19,7 +19,7 @@ def make_coffee(customer_name):
 def main():
     queue = ['A','B','C']
 
-    print(f"{ctime()} | === Multi-process Coffee Machine === ")
+    print(f"{ctime()} | === Multi-processing Coffee Machine === ")
     start_time = time()
 
     processes = []
