@@ -28,7 +28,7 @@ if __name__ == "__main__":
     for customer in customers:
         greet_diners(customer)
 
-    print(f"\n{ctime()} --- All Customers greeted. Splitting into individual processes ---\n")
+    print(f"\n{ctime()} === All Customers greeted. Splitting into individual processes ===\n")
 
     customer_processes = []
     for customer in customers:
