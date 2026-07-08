@@ -1,33 +1,42 @@
-# Delivery System): นักศึกษาต้องเขียน try...except CancelledError ได้ถูกต้อง 
-# และใช้ .get_name(), .cancel(), และ .cancelled() ได้
+# Assignment 1: The Smart Courier System (ระบบส่งพัสดุด่วน)
 import asyncio
 from time import ctime
 
+# ข้อ 1: Coroutine function จำลองการส่งพัสดุ
 async def delivery_task(package_id, duration):
     try:
         print(f"{ctime()} Courier started delivering {package_id}...")
         await asyncio.sleep(duration)
-        print(f"{ctime()} Courier: Package {package_id} Delivered!")
+        return f"Package {package_id} Delivered!"
     except asyncio.CancelledError:
+        # ข้อ 5: ดักจับการยกเลิกในตัวคอรูทีนส่งของ
         print(f"{ctime()} Delivery Canceled! Returning package to warehouse.")
-        raise  # Re-raise the exception to propagate cancellation
+        raise  # ส่งต่อ exception เพื่อให้สถานะ Task เป็น cancelled จริง
 
 async def main():
-    # Create a list of delivery tasks with varying durations
-    tasks = [
-        asyncio.create_task(delivery_task("P001", 5), name="Express-Courier"),
-    ]
+    # ข้อ 2: สร้าง Task 1 ตัว พร้อมตั้งชื่อว่า Express-Courier
+    task = asyncio.create_task(
+        delivery_task("P001", 5.0),
+        name="Express-Courier"
+    )
 
-    # Run the event loop and cancel one of the tasks after a short delay
-    await asyncio.sleep(2)  # Wait for a moment before cancelling
-    print(f"{ctime()} Check task '{tasks[0].get_name()}'. It is done? {tasks[0].done()}")
-    tasks[0].cancel()  # Cancel the first task
-    print(f"{ctime()} Taking too long! Canceling task...")
-    await asyncio.gather(*tasks, return_exceptions=True)
-    print(f"{ctime()} Final verify: It task officially canceled? {tasks[0].cancelled()}")
+    # ข้อ 3: ระหว่างพัสดุกำลังเดินทาง (ผ่านไป 2 วินาที) ตรวจสอบสถานะ
+    await asyncio.sleep(2)
+    print(f"{ctime()} Checking task '{task.get_name()}'... Is it done? {task.done()}")
 
-        # Wait for all tasks to complete or be cancelled
-    
+    # ข้อ 4: ผ่านไป 2 วินาทีแล้วยังไม่เสร็จ → ยกเลิกงานทันที
+    if not task.done():
+        print(f"{ctime()} Taking too long! Cancelling the task...")
+        task.cancel()
+
+    # รอให้การยกเลิกประมวลผลจนจบ
+    try:
+        await task
+    except asyncio.CancelledError:
+        pass  # ข้อความถูกพิมพ์ในตัวคอรูทีนแล้ว
+
+    # ข้อ 5: ตรวจสอบสถานะจากภายนอกด้วย .cancelled()
+    print(f"{ctime()} Final verify: Is task officially canceled? {task.cancelled()}")
 
 if __name__ == "__main__":
     asyncio.run(main())
