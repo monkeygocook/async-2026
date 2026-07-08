@@ -6,15 +6,15 @@ async def dynamic_job(number):
     await asyncio.sleep(1.0)
 
 async def main():
-    # 
+    # Check identity pf the current wrapper context
     me = asyncio.current_task()
     me.set_name("Main-Coordinator")
     print(f"{ctime()} Active Execution Context Name: {me.get_name()}")
     
-    # 
+    #  spawn multiple background items and dynamically 
     tasks = [asyncio.create_task(dynamic_job(i), name=f"Job-{i}") for i in range(3)]
     
-    # 
+    # peek inside active event loop queue to map workloads
     all_active = asyncio.all_tasks()
     print(f"{ctime()} Total Active Tasks inside Loop: {len(all_active)}")
     for t in all_active:
