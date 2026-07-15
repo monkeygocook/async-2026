@@ -3,7 +3,7 @@ import asyncio
 from time import ctime
 
 def alert_manager(finished_task):
-    # 
+    # alert_manager is a synchronous function that will be called when the task is done
     print(f"{ctime()} Callback Triggered! Task output fetched: {finished_task.result()}")
 
 async def download_file():
@@ -13,9 +13,9 @@ async def download_file():
 
 async def main():
     task = asyncio.create_task(download_file())
-    # 
+    # task.add_done_callback(alert_manager) is used to attach the synchronous function alert_manager to the task. This means that when the task is completed, the alert_manager function will be called automatically with the finished task as its argument.
     task.add_done_callback(alert_manager)
     
-    await task # 
+    await task # await for the task to complete
 
 asyncio.run(main())
